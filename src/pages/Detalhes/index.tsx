@@ -3,39 +3,8 @@ import { useEffect, useState } from "react";
 import { api } from "../../services/api";
 import { buscarDetalhesPessoa, buscarInformacoesDesaparecido } from "../../services/api";
 import ImagemComFallback from "../../components/ImagemComFallBack";
-
-
-interface DetalhesPessoa {
-    id: number;
-    nome: string;
-    idade: number;
-    sexo: string;
-    vivo: boolean;
-    urlFoto: string;
-    ultimaOcorrencia: {
-        dtDesaparecimento: string;
-        localDesaparecimentoConcat: string;
-        ocoId: number;
-        dataLocalizacao: string;
-        encontradoVivo: boolean;
-        ocorrenciaEntrevDesapDTO: {
-            informacao: string;
-            vestimentasDesaparecido: string;
-        };
-        listaCartaz: {
-            urlCartaz: string;
-            tipoCartaz: string;
-        }[];
-    };
-}
-
-interface InfoEnviada {
-    ocoId: number;
-    informacao: string;
-    data: string;
-    id: number;
-    anexos: string[];
-}
+import { InfoEnviada } from "../../Interfaces/InfoEnviada";
+import { DetalhesPessoa } from "../../Interfaces/IdetalhesPessoa";
 
 
 export default function Detalhes() {
@@ -120,14 +89,14 @@ export default function Detalhes() {
 
     return (
         <div className="max-w-4xl mx-auto p-8">
-            <h1 className="text-2xl font-bold mb-5 gap-4 m-5  text-gray-900 dark:text-white">Detalhes de {nome}</h1>
-            <div className="flex flex-col md:flex-row gap-6">
+            <h1 className="text-2xl font-bold mb-5 gap-4 m-5 text-gray-900 dark:text-white">Detalhes de {nome}</h1>
                 <ImagemComFallback
                     src={urlFoto}
                     alt={nome}
                     destaqueStatus={vivo == true ? "Vivo" : "Morto"}
-                    className="w-full md:w-64 h-[300px] object-cover rounded"
+                    className="items-center content-center h-80" /*<-- AKA */
                 />
+            <div className="flex flex-col md:flex-row gap-6">
 
                 <div className="flex-1 space-y-2 text-left  text-gray-900 dark:text-white">
                     <p><strong>Idade:</strong> {idade}</p>
@@ -142,40 +111,14 @@ export default function Detalhes() {
                     <p><strong>Local:</strong> {ultimaOcorrencia.localDesaparecimentoConcat}</p>
                     <p><strong>Vestimentas:</strong> {ultimaOcorrencia.ocorrenciaEntrevDesapDTO?.vestimentasDesaparecido}</p>
                     <p><strong>Informações:</strong> {ultimaOcorrencia.ocorrenciaEntrevDesapDTO?.informacao}</p>
-
-                    {ultimaOcorrencia.listaCartaz?.length > 0 && (
-                        <div className="mt-4">
-                            <h2 className="font-semibold">Cartaz:</h2>
-                            {ultimaOcorrencia.listaCartaz.map((cartaz, i) => (
-                                <a
-                                    key={i}
-                                    href={cartaz.urlCartaz}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="block underline text-blue-600"
-                                >
-                                    {cartaz.tipoCartaz}
-                                </a>
-                            ))}
-                        </div>
-                    )}
                 </div>
 
             </div>
+            
             {dados?.ultimaOcorrencia?.ocoId && (
                 <div className="mt-6">
-                    <button
-                        onClick={() => {
-                            if (mostrarInfos) {
-                                setMostrarInfos(false); 
-                            } else {
-                                carregarInformacoesEnviadas(); 
-                            }
-                        }}
-                        className="w-48 bg-gray-200 dark:bg-gray-800 rounded hover:bg-gray-400 dark:hover:bg-gray-400 dark:text-white px-4 py-2 rounded transition w-full md:w-auto"
-                    >
-                        {mostrarInfos ? "Ocultar Informações" : "Mais Informações"}
-                    </button>
+                        <div className="w-48 bg-white dark:bg-gray-800 rounded px-4 py-2 rounded transition w-full md:w-auto">
+                        </div>
 
                     {mostrarInfos && (
                         <div className="mt-4 bg-gray-100 dark:bg-gray-800 p-4 rounded shadow space-y-4 max-h-64 overflow-y-auto">

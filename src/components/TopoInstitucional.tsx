@@ -45,22 +45,6 @@ export default function TopoInstitucional() {
 
     return (
         <header className="w-full bg-gradient-to-r from-gray-900 to-gray-800 text-white shadow">
-            <div className="w-full border-b border-gray-700">
-                <div className="max-w-7xl mx-auto px-4 py-1 flex justify-between items-center text-sm">
-                    <div className="flex gap-4 md:flex-row  items-center">
-                        <span>MT.GOV.BR</span>
-                        <Link to="#" className="hover:underline">Contatos</Link>
-                        <span className="hidden md:inline">Alternar modo escuro/claro:</span>
-                        <button
-                            onClick={() => setDark((prev) => !prev)}
-                            className="text-lg hover:text-yellow-300 transition"
-                            title="Alternar modo escuro/claro"
-                        >
-                            {dark ? "☀" : "🌙"}
-                        </button>
-                    </div>
-                </div>
-            </div>
 
 
             <div className="w-full border-b border-gray-700 bg-gray-900">

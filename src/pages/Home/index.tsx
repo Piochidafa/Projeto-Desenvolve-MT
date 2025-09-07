@@ -3,21 +3,8 @@ import { useSearchParams } from "react-router-dom";
 import { useFiltro } from "../../components/FiltroContext";
 import CardDesaparecido from "../../components/CardDesaparecido";
 import { buscarPessoasDesaparecidas} from "../../services/api";
+import { PessoaDesaparecida } from "../../Interfaces/PessoaDesaparecida";
 
-
-interface PessoaDesaparecida {
-    id: number;
-    nome: string;
-    idade: number;
-    sexo: string;
-    vivo: boolean;
-    urlFoto: string;
-    ultimaOcorrencia: {
-        dtDesaparecimento: string;
-        localDesaparecimentoConcat: string;
-        dataLocalizacao: string,
-    };
-}
 
 export default function Home() {
     const [searchParams] = useSearchParams();
@@ -48,54 +35,12 @@ export default function Home() {
             }
         };
 
+
         carregarDesaparecidos();
     }, [numeroPagina, JSON.stringify(filtros)]);
 
-    useEffect(() => {
-        const carregarDesaparecidos = async () => {
-            try {
-                const res = await buscarPessoasDesaparecidas(0, filtros);
-                setLista(res.data.content || []);
-                setTotalPaginas(res.data.totalPages || 0);
-                setTotalElementos(res.data.totalElements || 0);
-            } catch (err) {
-                console.error("Erro ao carregar desaparecidos:", err);
-            }
-        };
-        setNumeroPagina(0)
-        carregarDesaparecidos();
-    }, [JSON.stringify(filtros)]);
-
     return (
-        <div className="p-4 max-w-7xl mx-auto">
-
-            {/* <div className="mb-6 flex flex-col sm:flex-row items-center gap-2">
-                <input
-                    type="text"
-                    placeholder="Nome"
-                    className="border border-gray-300 rounded px-4 py-2 w-full sm:w-auto flex-1"
-                    value={filtros.nome}
-                    onChange={(e) =>
-                        setFiltros((prev) => ({ ...prev, nome: e.target.value }))
-                    }
-                />
-                <button
-                    onClick={() => setNumeroPagina(0)}
-                    className="bg-gray-200 dark:bg-gray-800 rounded hover:bg-gray-400 dark:hover:bg-gray-400 disabled:opacity-50 dark:text-white px-4 py-2 transition"
-                >
-                    Buscar
-                </button>
-                <button
-                    onClick={() => {
-                        setFiltros({ nome: "", sexo: "",faixaIdadeInicial: 0, faixaIdadeFinal: 0,status:"" });
-                        setNumeroPagina(0);
-                    }}
-                    className="bg-gray-200 dark:bg-gray-800 rounded hover:bg-gray-400 dark:hover:bg-gray-400 disabled:opacity-50 dark:text-white px-4 py-2 transition"
-                >
-                    Limpar Filtros
-                </button>
-            </div> */}
-
+        <div className="p-1 max-w-7xl mx-auto">
             {mostrarFiltros && (
                 <div className="fixed inset-0 z-40 flex items-start justify-center pt-20 backdrop-blur-sm bg-black/30">
                     <div className="bg-white dark:bg-gray-900 rounded shadow-lg w-full max-w-2xl p-6 relative">
@@ -177,10 +122,11 @@ export default function Home() {
                     </div>
                 </div>
             )}
-            <div className=" dark:text-white px-4 py-3 transition ext-xl font-bold mb-4">
+
+            <div className=" px-4 py-3 transition ext-xl font-bold mb-4">
                 {filtros.status + "S"}
             </div>
-            {lista.length === 0 ? (
+            {lista.length == 0 ? (
                 <div className="col-span-full text-center text-gray-500">Carregando dados...</div>
             ) : (
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">

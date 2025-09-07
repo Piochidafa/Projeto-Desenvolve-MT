@@ -3,28 +3,13 @@ import Detalhes from "../pages/Detalhes";
 import EnviarInformacoes from "../pages/EnviarInformacoes";
 import { useParams } from "react-router-dom";
 import { api } from "../services/api";
+import MaisInformacoes from "../pages/MaisInformacoes";
 
-interface PessoaResponse {
-  vivo: boolean;
-}
 
 export default function ModalTabs() {
   const { id } = useParams();
-  const [abaAtiva, setAbaAtiva] = useState<"detalhes" | "informacoes">("detalhes");
-  // const [vivo, setVivo] = useState<boolean>(true);
+  const [abaAtiva, setAbaAtiva] = useState<"detalhes" | "informacoes" | "MaisInformacoes">("detalhes");
 
-  // useEffect(() => {
-  //   async function buscarSituacao() {
-  //     if (!id) return;
-  //     try {
-  //       const res = await api.get<PessoaResponse>(`/v1/pessoas/${id}`);
-  //       // setVivo(res.data.vivo);
-  //     } catch (err) {
-  //       console.error("Erro ao buscar situacao da pessoa:", err);
-  //     }
-  //   }
-  //   buscarSituacao();
-  // }, [id]);
 
   return (
     <div className="bg-white dark:bg-gray-900 rounded shadow-lg max-w-4xl w-full p-4">
@@ -40,6 +25,23 @@ export default function ModalTabs() {
           Detalhes
         </button>
 
+        
+        <button
+          onClick={() => setAbaAtiva("MaisInformacoes")}
+          // disabled={!vivo}
+          className={`px-4 py-2 ${
+            abaAtiva === "MaisInformacoes"
+              ? "border-b-2 border-blue-500 dark:border-amber-300 font-bold dark:text-white"
+              : "text-gray-500"
+          }
+           
+        
+          `}
+        >
+          Mais Informações
+        </button>
+        
+        
         <button
           onClick={() => setAbaAtiva("informacoes")}
           // disabled={!vivo}
@@ -54,6 +56,8 @@ export default function ModalTabs() {
         >
           Enviar Informações
         </button>
+
+
       </div>
 
       <div>
@@ -62,6 +66,10 @@ export default function ModalTabs() {
         id 
         // && vivo 
         && <EnviarInformacoes />}
+        {abaAtiva === "MaisInformacoes" && 
+        id 
+        // && vivo 
+        && <MaisInformacoes />}
       </div>
     </div>
   );

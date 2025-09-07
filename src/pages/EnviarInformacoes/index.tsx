@@ -32,8 +32,8 @@ export default function EnviarInformacoes() {
     }, [id]);
 
     useEffect(() => {
-        const infoValida = informacao.trim().length >= 10;
-        const descValida = descricao .trim().length >= 10;
+        const infoValida = informacao.trim().length >= 1;
+        const descValida = descricao .trim().length >= 1;
         // const localValido = local.trim().length > 0;
         const dataValida = data.trim().length > 0;
 
@@ -59,6 +59,7 @@ export default function EnviarInformacoes() {
 
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
+        console.log("handleSubmit chamado"); // Adicione esta linha
         setCarregando(true);
 
         if (!ocoId) {
@@ -118,7 +119,7 @@ export default function EnviarInformacoes() {
             <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
                     <label className="block font-semibold mb-1  text-gray-900 dark:text-white" htmlFor="informacao">
-                        Informação
+                        Informação*
                     </label>
                     <textarea
                         id="informacao"
@@ -131,7 +132,7 @@ export default function EnviarInformacoes() {
                 </div>
                 <div>
                     <label className="block font-semibold mb-1  text-gray-900 dark:text-white" htmlFor="descricao">
-                            Descrição do Anexo
+                            Descrição do Anexo*
                     </label>
                     <input
 
@@ -146,12 +147,14 @@ export default function EnviarInformacoes() {
                 </div>
                 <div>
                     <label className="block font-semibold mb-1  text-gray-900 dark:text-white" htmlFor="data">
-                        Data da Ocorrência
+                        Data da Ocorrência*
                     </label>
                     <input
                         type="date"
                         id="data"
                         value={data}
+                        min="1900-01-01"
+                        max="2026-12-31"
                         onChange={(e) => setData(e.target.value)}
                         className="w-full border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-100 rounded p-2"
                         required
@@ -192,12 +195,13 @@ export default function EnviarInformacoes() {
                 </div>
                 <button
                     type="submit"
-                    // disabled={!formValido}
+                    disabled={!formValido}
                     // className={`px-4 py-2 rounded transition w-full md:w-auto ${formValido
-                    //         ? "px-4 py-2 bg-gray-200 dark:bg-gray-800 rounded hover:bg-gray-400 dark:hover:bg-gray-400 dark:text-white disabled:opacity-50"
+                    //         ? ""
                     //         : "bg-gray-300 text-gray-500 cursor-not-allowed dark:bg-gray-800 rounded"
                     //     }`}
-                    className="  dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-100 rounded p-2"
+                    // className="  dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-100 rounded p-2"
+                    className="px-4 py-2 bg-gray-200 dark:bg-gray-800 rounded hover:bg-gray-400 dark:hover:bg-gray-400 dark:text-white disabled:opacity-50"
                 >
                     Enviar
                 </button>
