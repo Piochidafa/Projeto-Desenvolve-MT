@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import logo from "../assets/logo-pjc.png";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import { useFiltro } from "./FiltroContext";
 import { buscarEstatisticas } from "../services/api";
+import { PessoaDesaparecida } from "../Interfaces/PessoaDesaparecida";
 
 export default function TopoInstitucional() {
     const location = useLocation();
@@ -14,6 +15,9 @@ export default function TopoInstitucional() {
     const isEnviar = location.pathname.startsWith("/enviar-informacoes/");
     const mostrarBotoes = isDetalhes || isEnviar;
     const [estatisticas, setEstatisticas] = useState<{ quantPessoasDesaparecidas: number; quantPessoasEncontradas: number } | null>(null);
+
+    /* Teste */
+
 
     const [dark, setDark] = useState(() => {
         return localStorage.getItem("theme") === "dark";
@@ -47,7 +51,7 @@ export default function TopoInstitucional() {
         <header className="w-full bg-gradient-to-r from-gray-900 to-gray-800 text-white shadow">
 
 
-            <div className="w-full border-b border-gray-700 bg-gray-900">
+            <div className="w-full border-b border-gray-700 bg-black/75 ">
                 <div className="max-w-7xl mx-auto px-4 py-4 flex flex-col md:flex-row justify-between items-center">
                     <div className="flex items-center gap-28">
                         <img src={logo} alt="PJC" className="h-16" />
@@ -66,34 +70,30 @@ export default function TopoInstitucional() {
                 </div>
             </div>
 
-            <nav className="w-full bg-gray-800 border-t border-gray-700">
+            <nav className="w-full bg-gray-900 border-t border-gray-700">
                 <div className="max-w-7xl mx-auto px-4 py-2 flex flex-col md:flex-row justify-between gap-4 text-sm font-semibold">
-                    {/* <Link to="#">INSTITUCIONAL</Link>
-          <Link to="#">LEGISLAÇÃO</Link>
-          <Link to="#">IMPRENSA</Link>
-          <Link to="#">SERVIDOR</Link>
-          <Link to="#">UNIDADES</Link>
-          <Link to="#">ESTATÍSTICA</Link>
-          <Link to="#">OUVIDORIA</Link>
-          <Link to="#">TRANSPARÊNCIA</Link>
-          <Link to="#">PERGUNTAS FREQUENTES</Link> */}
 
-                    {isHome && (
-                        <button onClick={alternarFiltros} className="hover:underline text-white">
-                            {mostrarFiltros ? "ESCONDER FILTROS" : "MOSTRAR FILTROS DETALHADOS DE BUSCA"}
-                        </button>
-                    )}
+
                     {estatisticas && (
                         <div className="mb-1 grid grid-cols-1 sm:grid-cols-2 gap-2 text-center">
-                            <div className="bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-200 rounded p-1 shadow">
+                            <div className="bg-red-300 dark:bg-red-900 text-black dark:text-red-200 rounded p-1 shadow">
                                 <h2 className="text-xs font-bold">Desaparecidos</h2>
                                 <p className="text-1xl">{estatisticas.quantPessoasDesaparecidas}</p>
                             </div>
-                            <div className="bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 rounded p-1 shadow">
+                            <div className="bg-green-300 dark:bg-green-900 text-black dark:text-green-200 rounded p-1 shadow">
                                 <h2 className="text-xs font-bold">Localizados</h2>
                                 <p className="text-1xl">{estatisticas.quantPessoasEncontradas}</p>
                             </div>
                         </div>
+                    )}
+
+                   {isHome && (
+
+                        <button onClick={alternarFiltros} 
+                        className=" ease-in-out hover:-translate-y-1 hover:bg-indigo-500 transition delay-10 duration-300  hover:underline text-white ring px-4 m-1 rounded-lg shadow-xl bg-black/25 hover:bg-black  ">
+                            {/* {mostrarFiltros ? "ESCONDER FILTROS" : "MOSTRAR FILTROS DETALHADOS DE BUSCA"} */}
+                            FILTRAR
+                        </button>
                     )}
 
                     {mostrarBotoes && (

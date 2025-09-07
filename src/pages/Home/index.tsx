@@ -42,19 +42,25 @@ export default function Home() {
     return (
         <div className="p-1 max-w-7xl mx-auto">
             {mostrarFiltros && (
-                <div className="fixed inset-0 z-40 flex items-start justify-center pt-20 backdrop-blur-sm bg-black/30">
-                    <div className="bg-white dark:bg-gray-900 rounded shadow-lg w-full max-w-2xl p-6 relative">
+                <div className="fixed inset-0 z-40 flex items-start justify-center pt-40 backdrop-blur-sm bg-black/30">
+                    <div className="bg-white dark:bg-gray-900 rounded shadow-lg w-full max-w-4xl p-6 relative">
                         <h2 className="text-xl font-bold mb-4">Filtros</h2>
-                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-4">
+                            
+                            <label className="flex flex-col items-start">
+                                Nome
                             <input
                                 type="text"
-                                placeholder="Nome"
                                 className="w-full border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-100 rounded p-2"
                                 value={filtros.nome}
                                 onChange={(e) =>
                                     setFiltros((prev) => ({ ...prev, nome: e.target.value }))
                                 }
                             />
+                            </label>
+
+                            <label className="flex flex-col items-start">
+                                Sexo
                             <select
                                 className="w-full border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-100 rounded p-2"
                                 value={filtros.sexo}
@@ -66,24 +72,38 @@ export default function Home() {
                                 <option value="MASCULINO">Masculino</option>
                                 <option value="FEMININO">Feminino</option>
                             </select>
+                            </label>
+                            
+                            <label className="flex flex-col items-start" >
+                                Idade Minima
                             <input
-                                type="number"
+                                type="text"
                                 placeholder="Idade mínima"
-                                className="w-full border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-100 rounded p-2"
                                 value={filtros.faixaIdadeInicial}
-                                onChange={(e) =>
-                                    setFiltros((prev) => ({ ...prev, idadeMin: e.target.value }))
+                                className="w-full border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-100 rounded p-2"
+                                onChange={(e) =>{
+                                    console.log(e.target.value);
+                                    
+                                    setFiltros((prev) => ({ ...prev, faixaIdadeInicial: Number(e.target.value) }))
                                 }
+                            }
                             />
+                            </label>
+
+                            <label className="flex flex-col items-start" >
+                                Idade Maxima
                             <input
-                                type="number"
+                                type="text"
                                 placeholder="Idade máxima"
                                 className="w-full border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-100 rounded p-2"
                                 value={filtros.faixaIdadeFinal}
                                 onChange={(e) =>
-                                    setFiltros((prev) => ({ ...prev, idadeMax: e.target.value }))
+                                    setFiltros((prev) => ({ ...prev, faixaIdadeFinal: Number(e.target.value) }))
                                 }
                             />
+                            </label>
+                            <label className="flex flex-col items-start">
+                                Situação
                              <select
                                 className="w-full border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-100 rounded p-2"
                                 value={filtros.status}
@@ -95,6 +115,7 @@ export default function Home() {
                                 <option value="LOCALIZADO">LOCALIZADO</option>
                                 <option value="DESAPARECIDO">DESAPARECIDO</option>
                             </select>
+                            </label>
                         </div>
                         <div className="mt-6 flex gap-2 flex-wrap">
                             {/* <button

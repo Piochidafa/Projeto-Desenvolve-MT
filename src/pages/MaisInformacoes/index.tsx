@@ -19,6 +19,8 @@ export default function MaisInformacoes(){
     const [pagina, setPagina] = useState(1);
     const itensPorPagina = 7;
 
+    const [err, setErr] = useState<string>("Carregando informações do desaparecido....")
+
     const totalPaginas = Math.ceil(informacoes.length / itensPorPagina);
     const informacoesPaginadas = informacoes.slice(
       (pagina - 1) * itensPorPagina,
@@ -30,6 +32,11 @@ export default function MaisInformacoes(){
     const carregarInformacoesEnviadas = async () => {
         try {
           const res = await buscarInformacoesDesaparecido(pessoa?.ultimaOcorrencia.ocoId!);
+            console.log(res);
+            
+            if (informacoes.length === 0) {
+              setErr("Desaparecido nao possui mais informações.")
+            }
           setInformacoes(res.data);
         //   setMostrarInfos(true);
         } catch (err) {
@@ -68,10 +75,10 @@ export default function MaisInformacoes(){
     return (
         <div className="flex flex-col justify-between w-full max-w-5xl mx-auto p-3 min-h-[80vh] items-center">
         
-            {!pessoa ? (
+            {(!pessoa || informacoes.length === 0) ? (
                 <>
                 <h1></h1>
-                <h1 className="text-xl">Carregando informações do desaparecido...</h1>
+                <h1 className="text-xl">{err}</h1>
                 </>
             ) : (
                 <div className="w-full  max-h-[80vh] overflow-y-auto">
