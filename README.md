@@ -4,10 +4,8 @@ Este repositório contém uma aplicação **Single Page Application (SPA)** dese
 
 ## 👤 Informações do Candidato
 
-- **Nome:** null
-- **CPF:** null
-- **E-mail:** null
-- **Número da inscrição:** null
+- **Nome:** Cauã Carvalho de Castro Oliveira
+- **E-mail:** cauacastrooliveira@gmail.com
 
 ## 🚀 Como Executar o Projeto
 
