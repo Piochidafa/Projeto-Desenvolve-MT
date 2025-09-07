@@ -15,6 +15,13 @@ Siga os passos abaixo para executar o projeto localmente utilizando Docker:
 
 1. Acesse o diretório raiz onde se encontra o `Dockerfile`:
 
+2. Rode o comando de instalação das dependencias:
+
+```bash
+npm i
+```
+3. Rode o comando que vai buildar a aplicação e logo em seguida subir no docker:
+
 ```bash
 npm run docker
 ```
